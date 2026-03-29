@@ -1,4 +1,4 @@
-from dados import livros
+from dados import livros, reservas
 
 def buscar_livros(termo_busca):
     if termo_busca == "":
@@ -35,3 +35,17 @@ def obter_estoque(livro):
 def consultar_estoque_por_unidade(livro, unidade):
     estoque = obter_estoque(livro) # desenvolvida acima
     return estoque[unidade]
+
+def realizar_reserva(livro, unidade):
+    reserva = {
+        'livro_id': livro['id'],
+        'unidade': unidade,
+        'status': 'reservado',
+    }
+    reservas.append(reserva)
+    return reserva
+
+def gerar_qr_code(reserva): # retorna uma string representando o QR Code mínimo da reserva. Não depedende de bibliotecas externas (bom para MVP)
+    # RESERVA-{livro_id}-{unidade}
+    qr_code = f"RESERVA-{reserva['livro_id']}-{reserva['unidade'].replace(' ', '').upper()}"
+    return qr_code
