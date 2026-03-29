@@ -1,4 +1,4 @@
-from dados import livros, reservas
+from livraria_app.dados import livros, reservas
 
 def buscar_livros(termo_busca):
     if termo_busca == "":
