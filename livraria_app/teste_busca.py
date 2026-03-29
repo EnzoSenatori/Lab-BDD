@@ -28,6 +28,16 @@ def teste_busca_por_editora():
             encontrou = True
     assert encontrou == True
 
+def teste_busca_sem_resultados():
+    resultado = buscar_livros('livroQueNaoExiste')
+    assert len(resultado) == 0
+
+def teste_busca_vazia():
+    resultado = buscar_livros("")
+    assert resultado == "erro"
+
 teste_busca_por_titulo()
 teste_busca_por_autor()
 teste_busca_por_editora()
+teste_busca_sem_resultados()
+teste_busca_vazia()
