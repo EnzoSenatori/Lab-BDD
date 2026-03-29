@@ -105,6 +105,18 @@ def teste_gerar_qr_code():
     assert isinstance(qr_code, str)
     assert len(qr_code) > 0
 
+def teste_reserva_com_qr_code():
+    resultado = buscar_livros('Harry')
+    livro = resultado[0]
+    unidade = 'Loja Centro'
+    usuario = 'Enzo'
+    data = '2026-03-29'
+    reserva = realizar_reserva(livro, unidade, usuario, data)
+    assert reserva in reservas
+    assert 'qr_code' in reserva
+    assert isinstance(reserva['qr_code'], str) # qr_code deve ser uma string
+    assert len(reserva['qr_code']) > 0 # não ser vazia
+
 teste_busca_por_titulo()
 teste_busca_por_autor()
 teste_busca_por_editora()
@@ -118,3 +130,4 @@ teste_filtrar_por_unidade()
 teste_realizar_reserva()
 teste_reserva_em_reservas()
 teste_gerar_qr_code()
+teste_reserva_com_qr_code()

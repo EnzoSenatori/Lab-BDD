@@ -36,12 +36,17 @@ def consultar_estoque_por_unidade(livro, unidade):
     estoque = obter_estoque(livro) # desenvolvida acima
     return estoque[unidade]
 
-def realizar_reserva(livro, unidade):
+def realizar_reserva(livro, unidade, usuario=None, data=None): # Cria uma reserva do livro em uma unidade específica, registra na lista global e gera o QR Code mínimo.
     reserva = {
         'livro_id': livro['id'],
         'unidade': unidade,
         'status': 'reservado',
+        'usuario': usuario, # impl. futuras
+        'data': data
     }
+    # Gera QR Code
+    reserva['qr_code'] = gerar_qr_code(reserva)
+    # Registra a reserva
     reservas.append(reserva)
     return reserva
 
