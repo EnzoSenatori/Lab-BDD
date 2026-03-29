@@ -1,4 +1,5 @@
-from busca import buscar_livros, listar_unidades_disponiveis, obter_estoque, consultar_estoque_por_unidade
+from busca import buscar_livros, listar_unidades_disponiveis, obter_estoque, consultar_estoque_por_unidade, realizar_reserva, gerar_qr_code
+from dados import reservas
 
 def teste_busca_por_titulo():
     resultado = buscar_livros('Harry') # busca por título
@@ -79,6 +80,31 @@ def teste_filtrar_por_unidade():
     assert isinstance(quantidade, int)
     assert quantidade > 0
 
+def teste_realizar_reserva():
+    resultado = buscar_livros('Harry')
+    livro = resultado[0]
+    unidade = 'Loja Centro'
+    reserva = realizar_reserva(livro, unidade)
+    assert reserva['livro_id'] == livro['id']
+    assert reserva['unidade'] == unidade
+    assert reserva['status'] == 'reservado'
+
+def teste_reserva_em_reservas():
+    resultado = buscar_livros('Harry')
+    livro = resultado[0]
+    unidade = 'Loja Centro'
+    reserva = realizar_reserva(livro, unidade)
+    assert reserva in reservas # verifica que a reserva foi adicionada
+
+def teste_gerar_qr_code():
+    resultado = buscar_livros('Harry')
+    livro = resultado[0]
+    unidade = 'Loja Centro'
+    reserva = realizar_reserva(livro, unidade) # realiza a reserva (já existente)
+    qr_code = gerar_qr_code(reserva)
+    assert isinstance(qr_code, str)
+    assert len(qr_code) > 0
+
 teste_busca_por_titulo()
 teste_busca_por_autor()
 teste_busca_por_editora()
@@ -89,3 +115,6 @@ teste_quantidade_por_unidade()
 teste_filtrar_unidades_disponiveis()
 teste_unidades_ordenadas_por_estoque()
 teste_filtrar_por_unidade()
+teste_realizar_reserva()
+teste_reserva_em_reservas()
+teste_gerar_qr_code()
